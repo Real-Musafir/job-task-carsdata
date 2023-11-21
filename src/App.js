@@ -16,6 +16,7 @@ function App() {
   const [filterType, setFiltertype] = useState(null);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [itemLimit, setItemLimit] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Dynamic sorting function
   const sortByProperty = (property) => (a, b) => {
@@ -224,22 +225,53 @@ function App() {
               <th>PRODUCTION</th>
             </tr>
           </thead>
-          <tbody className="" key={allCarsData}>
-            {GetLimitWiseData(allCarsData, itemLimit, 2).map((item, index) => (
-              <tr key={index}>
-                <td className="text-center align-middle px-3">{item.brand}</td>
-                <td className="text-center align-middle px-3">{item.model}</td>
-                <td className="text-center align-middle px-3">{item.color}</td>
-                <td className="text-center align-middle px-3">
-                  {item.createdAt.slice(0, 10)}
-                </td>
-                <td className="text-center align-middle">
-                  {item.isInProduction ? "Yes" : "No"}
-                </td>
-              </tr>
-            ))}
+          <tbody key={allCarsData}>
+            {GetLimitWiseData(allCarsData, itemLimit, currentPage).map(
+              (item, index) => (
+                <tr key={index}>
+                  <td className="text-center align-middle px-3">
+                    {item.brand}
+                  </td>
+                  <td className="text-center align-middle px-3">
+                    {item.model}
+                  </td>
+                  <td className="text-center align-middle px-3">
+                    {item.color}
+                  </td>
+                  <td className="text-center align-middle px-3">
+                    {item.createdAt.slice(0, 10)}
+                  </td>
+                  <td className="text-center align-middle">
+                    {item.isInProduction ? "Yes" : "No"}
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
+
+        <div className="flex flex-row mt-10">
+          {Array.from(
+            { length: allCarsData.length / itemLimit + 1 },
+            (_, index) => index + 1
+          ).map((item, index) => (
+            <div
+              onClick={() => setCurrentPage(index + 1)}
+              className={`${
+                currentPage === index + 1 ? "border-red-900" : null
+              } border-2 w-10 text-center mx-[1px] cursor-pointer`}
+              key={index}
+            >
+              <h1
+                className={`${
+                  currentPage === index + 1 ? "text-red-900" : null
+                }`}
+              >
+                {item}
+              </h1>
+            </div>
+          ))}
+        </div>
       </div>
       {/* Filer Item moda */}
       <FilterModal type={filterType} />
