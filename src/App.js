@@ -8,6 +8,7 @@ function App() {
 
   // Dynamic sorting function
   const sortByProperty = (property) => (a, b) => {
+    console.log(property, "owowowo");
     if (property != "isInProduction") {
       const propA = a[property].toUpperCase();
       const propB = b[property].toUpperCase();
@@ -33,13 +34,13 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (sortType) {
-      let sortedData = carsData.sort(sortByProperty(sortType));
-      setAllCarsData(sortedData);
-      setRenderDom(renderDom + 1);
-    }
-  }, [sortType]);
+  function SortTypeFunction(sortType) {
+    let tempData = JSON.parse(JSON.stringify(allCarsData));
+    let sortedData = tempData.sort(sortByProperty(sortType));
+    setAllCarsData(sortedData);
+    setRenderDom(renderDom + 1);
+  }
+
   return (
     <div className="bg-white flex flex-col items-center pt-10">
       {/* Sort Filter Section */}
@@ -51,7 +52,10 @@ function App() {
         {SORT_TYPE_LIST.map((item, index) => (
           <div
             className="border-2 px-5 py-1 rounded border-red-900 mx-2 cursor-pointer"
-            onClick={() => setSortType(item.tag)}
+            onClick={() => {
+              setSortType(item.tag);
+              SortTypeFunction(item.tag);
+            }}
             key={index}
           >
             <h1
