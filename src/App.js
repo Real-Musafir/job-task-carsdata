@@ -4,8 +4,7 @@ import { carsData, SORT_TYPE_LIST } from "./utils/carsData";
 function App() {
   const [sortType, setSortType] = useState(null);
   const [allCarsData, setAllCarsData] = useState(carsData);
-
-  // let sScore = JSON.parse(JSON.stringify(scoreArray))
+  const [renderDom, setRenderDom] = useState(1);
 
   // Dynamic sorting function
   const sortByProperty = (property) => (a, b) => {
@@ -13,15 +12,24 @@ function App() {
       const propA = a[property].toUpperCase();
       const propB = b[property].toUpperCase();
 
-      if (propA < propB) {
-        return -1;
-      } else if (propA > propB) {
-        return 1;
-      } else {
-        return 0;
+      for (let i = 0; i < Math.min(propA.length, propB.length); i++) {
+        if (propA.charCodeAt(i) < propB.charCodeAt(i)) {
+          return -1;
+        } else if (propA.charCodeAt(i) > propB.charCodeAt(i)) {
+          return 1;
+        }
       }
+
+      // If characters are the same up to the length of the shorter string, shorter string comes first
+      return propA.length - propB.length;
     } else {
-      return a[property] - b[property];
+      if (a[property] && b[property]) {
+        return 1;
+      } else if (a[property]) {
+        return -1;
+      } else {
+        return 1;
+      }
     }
   };
 
@@ -29,6 +37,7 @@ function App() {
     if (sortType) {
       let sortedData = carsData.sort(sortByProperty(sortType));
       setAllCarsData(sortedData);
+      setRenderDom(renderDom + 1);
     }
   }, [sortType]);
   return (
@@ -56,12 +65,42 @@ function App() {
         ))}
       </div>
 
+      <table key={renderDom}>
+        <thead>
+          <tr>
+            <th>BRAND</th>
+            <th>MODEL</th>
+            <th>COLOR</th>
+            <th>TIME</th>
+            <th>PRODUCTION</th>
+          </tr>
+        </thead>
+        <tbody key={allCarsData} className="">
+          {allCarsData.map((item, index) => (
+            <tr key={index}>
+              <td className="text-center align-middle px-3">{item.brand}</td>
+              <td className="text-center align-middle px-3">{item.model}</td>
+              <td className="text-center align-middle px-3">{item.color}</td>
+              <td className="text-center align-middle px-3">
+                {item.createdAt.slice(0, 10)}
+              </td>
+              <td className="text-center align-middle">
+                {item.isInProduction ? "Yes" : "No"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
       {/* Data Section */}
-      {allCarsData.map((item, index) => (
-        <div key={index}>
-          <h1 className="text-red-800 m-5 text-3xl font-bold ">{item.model}</h1>
+      {/* {allCarsData.map((item, index) => (
+        <div className="flex flex-row items-center" key={index}>
+          <h1 className="text-red-800 mt-2 text-xl font-bold ">{item.model}</h1>
+          <h1 className="text-red-800 mt-2 text-xl font-bold ">
+            Color: {item.model}
+          </h1>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 }

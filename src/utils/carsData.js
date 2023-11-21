@@ -1,9 +1,5 @@
 export const SORT_TYPE_LIST = [
   {
-    title: "PRODUCTION",
-    tag: "isInProduction",
-  },
-  {
     title: "BRAND",
     tag: "brand",
   },
@@ -18,6 +14,10 @@ export const SORT_TYPE_LIST = [
   {
     title: "TIME",
     tag: "createdAt",
+  },
+  {
+    title: "PRODUCTION",
+    tag: "isInProduction",
   },
 ];
 
