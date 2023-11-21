@@ -14,9 +14,16 @@ function App() {
         {SORT_TYPE_LIST.map((item, index) => (
           <div
             className="border-2 px-5 py-1 rounded border-red-900 mx-2 cursor-pointer"
+            onClick={() => setSortType(item.tag)}
             key={index}
           >
-            <h1>{item.title}</h1>
+            <h1
+              className={`${
+                item.tag === sortType ? "text-red-900" : null
+              } font-bold`}
+            >
+              {item.title}
+            </h1>
           </div>
         ))}
       </div>
