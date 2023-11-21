@@ -255,21 +255,25 @@ function App() {
             { length: allCarsData.length / itemLimit + 1 },
             (_, index) => index + 1
           ).map((item, index) => (
-            <div
-              onClick={() => setCurrentPage(index + 1)}
-              className={`${
-                currentPage === index + 1 ? "border-red-900" : null
-              } border-2 w-10 text-center mx-[1px] cursor-pointer`}
-              key={index}
-            >
-              <h1
-                className={`${
-                  currentPage === index + 1 ? "text-red-900" : null
-                }`}
-              >
-                {item}
-              </h1>
-            </div>
+            <>
+              {currentPage + 5 > index && currentPage - 5 < index && (
+                <div
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={`${
+                    currentPage === index + 1 ? "border-red-900" : null
+                  } border-2 w-10 text-center mx-[1px] cursor-pointer`}
+                  key={index}
+                >
+                  <h1
+                    className={`${
+                      currentPage === index + 1 ? "text-red-900" : null
+                    }`}
+                  >
+                    {item}
+                  </h1>
+                </div>
+              )}
+            </>
           ))}
         </div>
       </div>
