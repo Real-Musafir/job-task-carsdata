@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { carsData, SORT_TYPE_LIST, FILTER_TYPE_LIST } from "./utils/carsData";
+import {
+  carsData,
+  SORT_TYPE_LIST,
+  FILTER_TYPE_LIST,
+  COLOR_LIST,
+  BRAND_LIST,
+  MODEL_LIST,
+} from "./utils/carsData";
 import Modal from "react-modal";
 
 function App() {
   const [sortType, setSortType] = useState(null);
   const [allCarsData, setAllCarsData] = useState(carsData);
   const [filterType, setFiltertype] = useState(null);
-
-  let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
 
   // Dynamic sorting function
@@ -52,13 +57,39 @@ function App() {
     // setAllCarsData(filteredData);
   }
 
-  function openModal() {
-    setIsOpen(true);
+  function ChooseFilterType(type) {
+    if (type === "color") {
+      return COLOR_LIST;
+    } else if (type === "brand") {
+      return BRAND_LIST;
+    } else if (type === "model") {
+      return MODEL_LIST;
+    } else {
+      return [];
+    }
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
+  function FilterModal({ type }) {
+    return (
+      <Modal
+        preventScroll={true}
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h1 className="text-red-900">Choose {type}</h1>
+        {ChooseFilterType(type).map((item, index) => (
+          <div key={index}>
+            <h1 className="cursor-pointer my-2">{item}</h1>
+          </div>
+        ))}
+      </Modal>
+    );
+  }
+
+  function openModal() {
+    setIsOpen(true);
   }
 
   function closeModal() {
@@ -145,24 +176,7 @@ function App() {
         </tbody>
       </table>
       {/* Filer Item moda */}
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Example Modal"
-      >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-        </form>
-      </Modal>
+      <FilterModal type={filterType} />
     </div>
   );
 }
@@ -171,8 +185,10 @@ export default App;
 
 const customStyles = {
   content: {
-    top: "50%",
+    top: "30%",
+    height: "50%",
     left: "50%",
+    width: "50%",
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",

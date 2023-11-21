@@ -1,5 +1,9 @@
 export const SORT_TYPE_LIST = [
   {
+    title: "PRODUCTION",
+    tag: "isInProduction",
+  },
+  {
     title: "BRAND",
     tag: "brand",
   },
@@ -14,10 +18,6 @@ export const SORT_TYPE_LIST = [
   {
     title: "TIME",
     tag: "createdAt",
-  },
-  {
-    title: "PRODUCTION",
-    tag: "isInProduction",
   },
 ];
 
@@ -39,6 +39,46 @@ export const FILTER_TYPE_LIST = [
     title: "PRODUCTION",
     tag: "isInProduction",
   },
+];
+
+export const COLOR_LIST = ["red", "black", "silver", "blue"];
+export const BRAND_LIST = ["BMW", "MERCEDES", "HONDA", "TOYOTA"];
+export const MODEL_LIST = [
+  "Helen",
+  "Nannie",
+  "Hoffman",
+  "Stella",
+  "Kara",
+  "Jessica",
+  "Carson",
+  "Blanca",
+  "Tami",
+  "Dina",
+  "Antonia",
+  "Britney",
+  "Rhonda",
+  "Juliana",
+  "Levy",
+  "Margo",
+  "Patton",
+  "Harvey",
+  "Owen",
+  "Verna",
+  "Reva",
+  "Herrera",
+  "Lindsay",
+  "Rhodes",
+  "Susanne",
+  "Bell",
+  "Dana",
+  "Carey",
+  "Sawyer",
+  "Geraldine",
+  "Mayra",
+  "Nelson",
+  "Deidre",
+  "Karyn",
+  "Gregory",
 ];
 
 export const carsData = [
