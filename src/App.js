@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import {
   carsData,
@@ -18,8 +18,7 @@ function App() {
 
   // Dynamic sorting function
   const sortByProperty = (property) => (a, b) => {
-    console.log(property, "owowowo");
-    if (property != "isInProduction") {
+    if (property !== "isInProduction") {
       const propA = a[property].toUpperCase();
       const propB = b[property].toUpperCase();
 
@@ -51,12 +50,21 @@ function App() {
   }
 
   function FilterTypeFunction(filterType, chooseType) {
-    setSortType(null);
-    let tempData = JSON.parse(JSON.stringify(carsData));
-    let filteredData = tempData.filter(
-      (item) => item[filterType] === chooseType
-    );
-    setAllCarsData(filteredData);
+    let tempData = JSON.parse(JSON.stringify(allCarsData));
+    let filteredData = tempData.filter((item) => {
+      if (filterType !== "isInProduction") {
+        if (item[filterType] === chooseType) {
+          return item;
+        }
+      } else {
+        if (item[filterType] === true) {
+          return item;
+        }
+      }
+    });
+    if (filteredData.length > 1) {
+      setAllCarsData(filteredData);
+    }
   }
 
   function ChooseFilterType(type) {
@@ -144,7 +152,11 @@ function App() {
             onClick={() => {
               setFiltertype(item.tag);
               // SortTypeFunction(item.tag);
-              openModal();
+              if (item.tag === "isInProduction") {
+                FilterTypeFunction(item.tag, true);
+              } else {
+                openModal();
+              }
             }}
             key={index}
           >
