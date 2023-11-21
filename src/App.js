@@ -15,6 +15,7 @@ function App() {
   const [allCarsData, setAllCarsData] = useState(carsData);
   const [filterType, setFiltertype] = useState(null);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [itemLimit, setItemLimit] = useState(10);
 
   // Dynamic sorting function
   const sortByProperty = (property) => (a, b) => {
@@ -115,88 +116,123 @@ function App() {
   }
 
   return (
-    <div className="bg-white flex flex-col items-center pt-10">
-      {/* Sort  Section */}
-      <div className="flex flex-row mb-7">
-        <div className="bg-red-900 px-5 py-1 rounded">
-          <h1 className="text-white text-xl font-bold">Sorted by</h1>
-        </div>
-
-        {SORT_TYPE_LIST.map((item, index) => (
-          <div
-            className="border-2 px-5 py-1 rounded border-red-900 mx-2 cursor-pointer"
-            onClick={() => {
-              setSortType(item.tag);
-              SortTypeFunction(item.tag);
-            }}
-            key={index}
-          >
-            <h1
-              className={`${
-                item.tag === sortType ? "text-red-900" : null
-              } font-bold`}
-            >
-              {item.title}
+    <div className="bg-white  pt-10">
+      <div className=" w-2/3 mx-auto">
+        {/* Sort  Section */}
+        <div className="flex flex-row mb-7">
+          <div className="bg-red-900 px-5 py-1 rounded">
+            <h1 className="text-white text-lg text-center font-bold">
+              Sorted by
             </h1>
           </div>
-        ))}
-      </div>
-      {/* Filter  Section */}
-      <div className="flex flex-row mb-7">
-        <div className="bg-red-900 px-5 py-1 rounded">
-          <h1 className="text-white text-xl font-bold">Filtered by</h1>
-        </div>
 
-        {FILTER_TYPE_LIST.map((item, index) => (
-          <div
-            className="border-2 px-5 py-1 rounded border-red-900 mx-2 cursor-pointer"
-            onClick={() => {
-              setFiltertype(item.tag);
-              // SortTypeFunction(item.tag);
-              if (item.tag === "isInProduction") {
-                FilterTypeFunction(item.tag, true);
-              } else {
-                openModal();
-              }
-            }}
-            key={index}
-          >
-            <h1
-              className={`${
-                item.tag === filterType ? "text-red-900" : null
-              } font-bold`}
+          {SORT_TYPE_LIST.map((item, index) => (
+            <div
+              className="border-2 px-5 py-1 text-center rounded border-red-900 mx-2 cursor-pointer"
+              onClick={() => {
+                setSortType(item.tag);
+                SortTypeFunction(item.tag);
+              }}
+              key={index}
             >
-              {item.title}
-            </h1>
-          </div>
-        ))}
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>BRAND</th>
-            <th>MODEL</th>
-            <th>COLOR</th>
-            <th>TIME</th>
-            <th>PRODUCTION</th>
-          </tr>
-        </thead>
-        <tbody className="" key={allCarsData}>
-          {allCarsData.map((item, index) => (
-            <tr key={index}>
-              <td className="text-center align-middle px-3">{item.brand}</td>
-              <td className="text-center align-middle px-3">{item.model}</td>
-              <td className="text-center align-middle px-3">{item.color}</td>
-              <td className="text-center align-middle px-3">
-                {item.createdAt.slice(0, 10)}
-              </td>
-              <td className="text-center align-middle">
-                {item.isInProduction ? "Yes" : "No"}
-              </td>
-            </tr>
+              <h1
+                className={`${
+                  item.tag === sortType ? "text-red-900" : null
+                } font-bold `}
+              >
+                {item.title}
+              </h1>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+        {/* Filter  Section */}
+        <div className="flex flex-row mb-7">
+          <div className="bg-red-900 px-5 py-1 rounded">
+            <h1 className="text-white text-lg text-center font-bold">
+              Filtered by
+            </h1>
+          </div>
+
+          {FILTER_TYPE_LIST.map((item, index) => (
+            <div
+              className="border-2 px-5 py-1 rounded border-red-900 mx-2 cursor-pointer"
+              onClick={() => {
+                setFiltertype(item.tag);
+                // SortTypeFunction(item.tag);
+                if (item.tag === "isInProduction") {
+                  FilterTypeFunction(item.tag, true);
+                } else {
+                  openModal();
+                }
+              }}
+              key={index}
+            >
+              <h1
+                className={`${
+                  item.tag === filterType ? "text-red-900" : null
+                } font-bold`}
+              >
+                {item.title}
+              </h1>
+            </div>
+          ))}
+        </div>
+
+        {/* Pagination */}
+        <div className="flex flex-row mb-7">
+          <div className="bg-red-900 px-5 py-1 rounded">
+            <h1 className="text-white text-lg text-center font-bold">
+              Item Limit
+            </h1>
+          </div>
+
+          <div className="border-2 flex flex-row px-5 py-1 rounded border-red-900 mx-2 ">
+            <h1
+              onClick={() => {
+                if (itemLimit > 5) {
+                  setItemLimit(itemLimit - 1);
+                }
+              }}
+              className="font-bold cursor-pointer"
+            >
+              -
+            </h1>
+            <h1 className="font-bold mx-2">{itemLimit}</h1>
+            <h1
+              onClick={() => setItemLimit(itemLimit + 1)}
+              className="font-bold cursor-pointer"
+            >
+              +
+            </h1>
+          </div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>BRAND</th>
+              <th>MODEL</th>
+              <th>COLOR</th>
+              <th>TIME</th>
+              <th>PRODUCTION</th>
+            </tr>
+          </thead>
+          <tbody className="" key={allCarsData}>
+            {allCarsData.map((item, index) => (
+              <tr key={index}>
+                <td className="text-center align-middle px-3">{item.brand}</td>
+                <td className="text-center align-middle px-3">{item.model}</td>
+                <td className="text-center align-middle px-3">{item.color}</td>
+                <td className="text-center align-middle px-3">
+                  {item.createdAt.slice(0, 10)}
+                </td>
+                <td className="text-center align-middle">
+                  {item.isInProduction ? "Yes" : "No"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* Filer Item moda */}
       <FilterModal type={filterType} />
     </div>
