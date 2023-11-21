@@ -50,11 +50,13 @@ function App() {
     setAllCarsData(sortedData);
   }
 
-  function FilterTypeFunction(filterType) {
-    let tempData = JSON.parse(JSON.stringify(allCarsData));
-    let filteredData = tempData.find((item) => item[filterType] === filterType);
-    console.log();
-    // setAllCarsData(filteredData);
+  function FilterTypeFunction(filterType, chooseType) {
+    setSortType(null);
+    let tempData = JSON.parse(JSON.stringify(carsData));
+    let filteredData = tempData.filter(
+      (item) => item[filterType] === chooseType
+    );
+    setAllCarsData(filteredData);
   }
 
   function ChooseFilterType(type) {
@@ -77,10 +79,17 @@ function App() {
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
+        ariaHideApp={false}
       >
         <h1 className="text-red-900">Choose {type}</h1>
         {ChooseFilterType(type).map((item, index) => (
-          <div onClick={() => closeModal()} key={index}>
+          <div
+            onClick={() => {
+              FilterTypeFunction(type, item);
+              closeModal();
+            }}
+            key={index}
+          >
             <h1 className="cursor-pointer my-2">{item}</h1>
           </div>
         ))}
