@@ -261,7 +261,7 @@ function App() {
             (_, index) => index + 1
           ).map((item, index) => (
             <>
-              {currentPage + 5 > index && currentPage - 5 < index && (
+              {currentPage + 4 > index && currentPage - 5 < index && (
                 <div
                   onClick={() => setCurrentPage(index + 1)}
                   className={`${
@@ -280,6 +280,15 @@ function App() {
               )}
             </>
           ))}
+
+          {allCarsData.length / itemLimit - 3 > currentPage && (
+            <div
+              onClick={() => setCurrentPage(currentPage + 1)}
+              className="border-2 w-12 text-center mx-[1px] cursor-pointer"
+            >
+              <h1 className="text-red-900">Next</h1>
+            </div>
+          )}
         </div>
       </div>
       {/* Filer Item moda */}
