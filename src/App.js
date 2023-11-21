@@ -4,7 +4,6 @@ import { carsData, SORT_TYPE_LIST } from "./utils/carsData";
 function App() {
   const [sortType, setSortType] = useState(null);
   const [allCarsData, setAllCarsData] = useState(carsData);
-  const [renderDom, setRenderDom] = useState(1);
 
   // Dynamic sorting function
   const sortByProperty = (property) => (a, b) => {
@@ -38,7 +37,7 @@ function App() {
     let tempData = JSON.parse(JSON.stringify(allCarsData));
     let sortedData = tempData.sort(sortByProperty(sortType));
     setAllCarsData(sortedData);
-    setRenderDom(renderDom + 1);
+    // setRenderDom(renderDom + 1);
   }
 
   return (
@@ -69,7 +68,7 @@ function App() {
         ))}
       </div>
 
-      <table key={renderDom}>
+      <table>
         <thead>
           <tr>
             <th>BRAND</th>
