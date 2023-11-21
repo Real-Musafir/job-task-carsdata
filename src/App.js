@@ -80,7 +80,7 @@ function App() {
       >
         <h1 className="text-red-900">Choose {type}</h1>
         {ChooseFilterType(type).map((item, index) => (
-          <div key={index}>
+          <div onClick={() => closeModal()} key={index}>
             <h1 className="cursor-pointer my-2">{item}</h1>
           </div>
         ))}
