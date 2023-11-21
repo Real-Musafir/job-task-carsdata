@@ -46,12 +46,14 @@ function App() {
   };
 
   function SortTypeFunction(sortType) {
+    setCurrentPage(1);
     let tempData = JSON.parse(JSON.stringify(allCarsData));
     let sortedData = tempData.sort(sortByProperty(sortType));
     setAllCarsData(sortedData);
   }
 
   function FilterTypeFunction(filterType, chooseType) {
+    setCurrentPage(1);
     setSortType(null);
     let tempData = JSON.parse(JSON.stringify(carsData));
     let filteredData = tempData.filter((item) => {
