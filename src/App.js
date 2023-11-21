@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { carsData, SORT_TYPE_LIST } from "./utils/carsData";
+import { carsData, SORT_TYPE_LIST, FILTER_TYPE_LIST } from "./utils/carsData";
+import Modal from "react-modal";
+
 function App() {
   const [sortType, setSortType] = useState(null);
   const [allCarsData, setAllCarsData] = useState(carsData);
+  const [filterType, setFiltertype] = useState(null);
+
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   // Dynamic sorting function
   const sortByProperty = (property) => (a, b) => {
@@ -37,12 +43,31 @@ function App() {
     let tempData = JSON.parse(JSON.stringify(allCarsData));
     let sortedData = tempData.sort(sortByProperty(sortType));
     setAllCarsData(sortedData);
-    // setRenderDom(renderDom + 1);
+  }
+
+  function FilterTypeFunction(filterType) {
+    let tempData = JSON.parse(JSON.stringify(allCarsData));
+    let filteredData = tempData.find((item) => item[filterType] === filterType);
+    console.log();
+    // setAllCarsData(filteredData);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
   }
 
   return (
     <div className="bg-white flex flex-col items-center pt-10">
-      {/* Sort Filter Section */}
+      {/* Sort  Section */}
       <div className="flex flex-row mb-7">
         <div className="bg-red-900 px-5 py-1 rounded">
           <h1 className="text-white text-xl font-bold">Sorted by</h1>
@@ -67,7 +92,32 @@ function App() {
           </div>
         ))}
       </div>
+      {/* Filter  Section */}
+      <div className="flex flex-row mb-7">
+        <div className="bg-red-900 px-5 py-1 rounded">
+          <h1 className="text-white text-xl font-bold">Filtered by</h1>
+        </div>
 
+        {FILTER_TYPE_LIST.map((item, index) => (
+          <div
+            className="border-2 px-5 py-1 rounded border-red-900 mx-2 cursor-pointer"
+            onClick={() => {
+              setFiltertype(item.tag);
+              // SortTypeFunction(item.tag);
+              openModal();
+            }}
+            key={index}
+          >
+            <h1
+              className={`${
+                item.tag === filterType ? "text-red-900" : null
+              } font-bold`}
+            >
+              {item.title}
+            </h1>
+          </div>
+        ))}
+      </div>
       <table>
         <thead>
           <tr>
@@ -94,18 +144,38 @@ function App() {
           ))}
         </tbody>
       </table>
-
-      {/* Data Section */}
-      {/* {allCarsData.map((item, index) => (
-        <div className="flex flex-row items-center" key={index}>
-          <h1 className="text-red-800 mt-2 text-xl font-bold ">{item.model}</h1>
-          <h1 className="text-red-800 mt-2 text-xl font-bold ">
-            Color: {item.model}
-          </h1>
-        </div>
-      ))} */}
+      {/* Filer Item moda */}
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+        <button onClick={closeModal}>close</button>
+        <div>I am a modal</div>
+        <form>
+          <input />
+          <button>tab navigation</button>
+          <button>stays</button>
+          <button>inside</button>
+          <button>the modal</button>
+        </form>
+      </Modal>
     </div>
   );
 }
 
 export default App;
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};

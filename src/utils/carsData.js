@@ -21,6 +21,26 @@ export const SORT_TYPE_LIST = [
   },
 ];
 
+export const FILTER_TYPE_LIST = [
+  {
+    title: "BRAND",
+    tag: "brand",
+  },
+  {
+    title: "MODEL",
+    tag: "model",
+  },
+  {
+    title: "COLOR",
+    tag: "color",
+  },
+
+  {
+    title: "PRODUCTION",
+    tag: "isInProduction",
+  },
+];
+
 export const carsData = [
   {
     id: "6531d10e5233915130deb0b7",
