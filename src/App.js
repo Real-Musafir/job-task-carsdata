@@ -223,6 +223,7 @@ function App() {
               <th>COLOR</th>
               <th>TIME</th>
               <th>PRODUCTION</th>
+              <th>Link</th>
             </tr>
           </thead>
           <tbody key={allCarsData}>
@@ -241,8 +242,12 @@ function App() {
                   <td className="text-center align-middle px-3">
                     {item.createdAt.slice(0, 10)}
                   </td>
-                  <td className="text-center align-middle">
+                  <td className="text-center align-middle px-3">
                     {item.isInProduction ? "Yes" : "No"}
+                  </td>
+
+                  <td className="text-center align-middle px-3 cursor-pointer">
+                    link
                   </td>
                 </tr>
               )
