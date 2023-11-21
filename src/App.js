@@ -50,7 +50,8 @@ function App() {
   }
 
   function FilterTypeFunction(filterType, chooseType) {
-    let tempData = JSON.parse(JSON.stringify(allCarsData));
+    setSortType(null);
+    let tempData = JSON.parse(JSON.stringify(carsData));
     let filteredData = tempData.filter((item) => {
       if (filterType !== "isInProduction") {
         if (item[filterType] === chooseType) {
