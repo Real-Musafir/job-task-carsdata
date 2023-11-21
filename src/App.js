@@ -115,6 +115,14 @@ function App() {
     setIsOpen(false);
   }
 
+  function GetLimitWiseData(data, limit, pageNumber) {
+    const firstLimit = pageNumber * limit - limit;
+    const lastLimit = pageNumber * limit + limit;
+    const objectsInRange = data.slice(firstLimit, lastLimit + 1);
+
+    return objectsInRange;
+  }
+
   return (
     <div className="bg-white  pt-10">
       <div className=" w-2/3 mx-auto">
@@ -217,7 +225,7 @@ function App() {
             </tr>
           </thead>
           <tbody className="" key={allCarsData}>
-            {allCarsData.map((item, index) => (
+            {GetLimitWiseData(allCarsData, itemLimit, 2).map((item, index) => (
               <tr key={index}>
                 <td className="text-center align-middle px-3">{item.brand}</td>
                 <td className="text-center align-middle px-3">{item.model}</td>
