@@ -41,9 +41,9 @@ function App() {
     }
   }, [sortType]);
   return (
-    <div className="bg-white flex flex-col items-center">
+    <div className="bg-white flex flex-col items-center pt-10">
       {/* Sort Filter Section */}
-      <div className="flex flex-row">
+      <div className="flex flex-row mb-7">
         <div className="bg-red-900 px-5 py-1 rounded">
           <h1 className="text-white text-xl font-bold">Sorted by</h1>
         </div>
@@ -75,7 +75,7 @@ function App() {
             <th>PRODUCTION</th>
           </tr>
         </thead>
-        <tbody key={allCarsData} className="">
+        <tbody className="" key={allCarsData}>
           {allCarsData.map((item, index) => (
             <tr key={index}>
               <td className="text-center align-middle px-3">{item.brand}</td>
